@@ -1,11 +1,17 @@
 import argparse
 
+from exceptions.request_exception import RequestException
 from src.machine_label import DgtMachine
 
 
 def __main__(plate: str):
-    label = DgtMachine(plate).process_label()
-    print(label.url_image, label.value)
+    try:
+        # Process the plate number
+        label = DgtMachine(plate).process_label()
+        print("Label image", label.url_image)
+        print("Label value", label.value)
+    except RequestException as e:
+        print(f"Response error: {e}")
 
 
 if __name__ == '__main__':
